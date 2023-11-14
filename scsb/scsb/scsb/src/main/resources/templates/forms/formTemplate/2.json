@@ -1,0 +1,1 @@
+{"components":[{"label":"Text Field","applyMaskOn":"change","tableView":true,"key":"textField","type":"textfield","input":true},{"label":"Password","applyMaskOn":"change","tableView":false,"key":"password","type":"password","input":true,"protected":true},{"type":"button","label":"Submit","key":"submit","disableOnInvalid":true,"input":true,"tableView":false}]}

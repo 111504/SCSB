@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title th:text="${title}">Login - Brand</title>
+    <link rel="stylesheet" th:href="@{/static/assets/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" th:href="@{/static/assets/fonts/fontawesome-all.min.css}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.form.io/js/formio.full.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/css/smart_wizard_all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/css/theme.bootstrap_4.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <link rel="stylesheet" th:href="@{/static/assets/css/navbar_menu.css}">
+</head>
+
+<body class="d-xxl-flex bg-gradient-primary" style="background: var(--bs-highlight-bg);">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-9 col-lg-12 col-xl-10">
+                <div class="card shadow-lg o-hidden border-0 my-5">
+                    <div class="card-body p-0">
+                        <div class="row d-xxl-flex justify-content-center">
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h4 class="text-dark mb-4">上海商銀(T大使)&nbsp; 電子表單系統</h4>
+                                    </div>
+                                    <form class="user" method="post" enctype="application/x-www-form-urlencoded">
+
+                                        <!--    避免csrf的攻擊 type要改成hidden-->
+                                        <input type="hidden" th:value="${_csrf.token}" name="_csrf" th:if="${_csrf}" />
+                                        <div class="mb-3" th:if="${param.error}"><div class="alert alert-danger">員工編號或密碼輸入錯誤！</div></div>
+                                        <div class="mb-3"><input class="form-control form-control-user" type="text" id="login_InputEmpId" aria-describedby="EmpIdHelp" placeholder="請輸入員工編號" name="username" required="" pattern="^[a-zA-Z0-9_.-]*$" minlength="3" maxlength="8"></div>
+                                        <div class="mb-3"><input class="form-control form-control-user" type="password" id="exampleInputPassword" placeholder="請輸入密碼" name="password" pattern="^[a-zA-Z0-9_.-]*$" required=""></div>
+                                        <div class="mb-3">
+
+                                        </div><button class="btn btn-primary d-block btn-user w-100" id="password_login" type="submit">登入</button>
+<!--                                        <hr><button class="btn btn-primary d-block btn-user w-100" id="SSO_login" type="submit" style="color: var(&#45;&#45;bs-btn-color);background: var(&#45;&#45;bs-danger-text-emphasis);">上海商銀 SSO單點登入</button>-->
+
+                                        <hr class="d-none">
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/static/assets/js/jquery.min.js}"></script>
+    <script th:src="@{/static/assets/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/static/assets/js/addFormV2.js}"></script>
+    <script th:src="@{/static/assets/js/Dyn_formGUI.js}"></script>
+    <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/af-2.6.0/b-2.4.2/b-colvis-2.4.2/b-print-2.4.2/cr-1.7.0/date-1.5.1/fc-4.3.0/fh-3.4.0/kt-2.10.0/r-2.5.0/rg-1.4.1/rr-1.4.1/sc-2.2.0/sb-1.6.0/sp-2.2.0/datatables.min.js"></script>
+    <script src="https://cdn.form.io/js/formio.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/js/jquery.smartWizard.min.js" type="module"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/jquery.tablesorter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/widgets/widget-filter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/widgets/widget-storage.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script th:src="@{/static/assets/js/incident.js}"></script>
+    <script th:src="@{/static/assets/js/theme.js}"></script>
+    <script th:src="@{/static/assets/js/unreview.js}"></script>
+
+</body>
+
+</html>

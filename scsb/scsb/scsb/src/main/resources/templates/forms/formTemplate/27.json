@@ -1,0 +1,1 @@
+{"components":[{"label":"Name","applyMaskOn":"change","tableView":true,"key":"name","type":"textfield","input":true},{"label":"Day","hideInputLabels":false,"inputsLabelPosition":"top","useLocaleSettings":false,"tableView":false,"fields":{"day":{"hide":false},"month":{"hide":false},"year":{"hide":false}},"key":"day","type":"day","input":true,"defaultValue":"00/00/0000"}]}

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <title>Dashboard - Brand</title>
+    <link rel="stylesheet" th:href="@{/static/assets/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" th:href="@{/static/assets/fonts/fontawesome-all.min.css}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.form.io/js/formio.full.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/css/smart_wizard_all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/css/theme.bootstrap_4.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <link rel="stylesheet" th:href="@{/static/assets/css/navbar_menu.css}">
+</head>
+
+<body id="page-top">
+<div id="wrapper">
+    <nav class="navbar align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 navbar-dark"
+         style="background: rgb(140,2,27);">
+        <div class="container-fluid d-flex flex-column p-0">
+            <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
+               th:href="@{/index}"></a>
+            <hr class="sidebar-divider my-0">
+            <ul class="navbar-nav text-light" id="accordionSidebar">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/unreview-table}" style="font-size: 24px;"><i
+                            class="far fa-envelope-open" style="font-size: 24px;"></i><span>待辦清單</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/incident-table}" style="font-size: 24px;"><i class="fas fa-user"
+                                                                                                 style="font-size: 24px;"></i><span>歷史紀錄</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" sec:authorize="hasAuthority('admin')" th:href="@{/redirectToDynFormGUI}"
+                       style="font-size: 24px;"><i class="far fa-plus-square"
+                                                   style="font-size: 24px;"></i><span>自訂表單</span></a>
+                    <a class="nav-link" th:href="@{/addFormV2}" style="font-size: 24px;"><i class="fas fa-table"
+                                                                                            style="font-size: 24px;"></i><span>填寫表單</span></a>
+                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" sec:authorize="hasAuthority('admin')" th:href="@{/blank}"-->
+<!--                       style="font-size: 24px;"><i class="fas fa-window-maximize" style="font-size: 24px;"></i><span>權限管理</span></a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" sec:authorize="hasAuthority('admin')" th:href="@{/blank-1}"-->
+<!--                       style="font-size: 24px;"><i class="far fa-list-alt"-->
+<!--                                                   style="font-size: 24px;"></i><span>管理表單模板</span></a>-->
+<!--                </li>-->
+                <li class="nav-item">
+                    <a class="nav-link" sec:authorize="hasAuthority('admin')" th:href="@{/Form_Analysis}"
+                       style="font-size: 24px;"><i class="far fa-list-alt"
+                                                   style="font-size: 24px;"></i><span>查詢表單</span></a>
+                </li>
+            </ul>
+            <div class="text-center d-none d-md-inline">
+                <button class="btn rounded-circle border-0" id="sidebarToggle1" type="button"></button>
+            </div>
+        </div>
+    </nav>
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+            <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light">
+                <div class="container-fluid">
+                    <button class="btn rounded-circle me-3" id="sidebarToggleTop1" type="button"><i
+                            class="fas fa-bars"></i></button>
+                    <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
+                       th:href="@{/index}" id="navbar_menu_brand_top">
+                        <div class="sidebar-brand-icon rotate-n-15">
+                            <img th:src="@{/static/assets/img/logo/SCSB_LOGO.png}"
+                                 style="height: 35px;transform: rotate(15deg);" loading="auto">
+                        </div>
+                        <div class="sidebar-brand-text mx-2"><span style="font-size: 18px;">上海商銀(T大使計劃)</span></div>
+                    </a>
+                    <div class="d-lg-flex flex-grow-1 justify-content-lg-end" id="nowtime"></div>
+                    <ul class="navbar-nav flex-nowrap ms-auto">
+                        <li class="nav-item dropdown d-sm-none no-arrow">
+                            <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
+                               href="#">
+                                <i class="fas fa-search"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in"
+                                 aria-labelledby="searchDropdown">
+                                <form class="me-auto navbar-search w-100" th:action="@{/search}" method="post">
+                                    <div class="input-group">
+                                        <input class="bg-light form-control border-0 small" type="text"
+                                               placeholder="Search for ...">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary py-0" type="submit"><i
+                                                    class="fas fa-search"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown no-arrow">
+                            <div class="nav-item dropdown no-arrow">
+                                <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
+                                   href="#">
+                                    <span id="currentLoginUser" class="d-lg-inline me-2 text-gray-600 small"
+                                          sec:authentication="principal.username"></span>
+                                </a>
+                                <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                                    <a class="dropdown-item" th:href="@{/static/profile.html}"><i
+                                            class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;個人資料</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" th:href="@{/logout}"
+                                       style="text-align: center;background: #efa2a2;color: rgb(0,0,0);border-radius: 13px;"><strong>登出</strong></a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="modal fade" role="dialog" tabindex="-1" id="formGUI" th:fragment="formGUI">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header d-xxl-flex">
+                            <h4 class="modal-title d-xxl-flex">請選擇您要執行的方式</h4>
+                            <button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card text-center" style="height: 100%;">
+                                            <div class="card-body">
+                                                <h4 class="card-title">常用樣板</h4>
+                                                <h6 class="text-muted card-subtitle mb-2"></h6>
+                                                <link rel="stylesheet"
+                                                      href="https://cdn.form.io/js/formio.full.min.css">
+                                                <script src="https://cdn.form.io/js/formio.full.min.js"></script>
+                                                <div id="modal_formselect_1"></div>
+                                                <script>
+                                                    Formio.createForm(document.getElementById('modal_formselect_1'), {
+                                                        "display": "form",
+                                                        "settings": {
+                                                            "pdf": {
+                                                                "id": "1ec0f8ee-6685-5d98-a847-26f67b67d6f0",
+                                                                "src": "https://files.form.io/pdf/5692b91fd1028f01000407e3/file/1ec0f8ee-6685-5d98-a847-26f67b67d6f0"
+                                                            }
+                                                        },
+                                                        "components": [
+                                                            {
+                                                                "label": "Select",
+                                                                "widget": "choicesjs",
+                                                                "hideLabel": true,
+                                                                "tableView": true,
+                                                                "dataSrc": "url",
+                                                                "data": {
+                                                                    "url": "http://localhost:8888/api/template/getList",
+                                                                    "headers": [
+                                                                        {
+                                                                            "key": "",
+                                                                            "value": ""
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                "key": "select",
+                                                                "type": "select",
+                                                                "input": true,
+                                                                "disableLimit": false,
+                                                                "noRefreshOnScroll": false
+                                                            },
+                                                            {
+                                                                "label": "選擇",
+                                                                "showValidations": true,
+                                                                "disableOnInvalid": true,
+                                                                "tableView": false,
+                                                                "key": "submit",
+                                                                "attributes": {
+                                                                    "data-bs-dismiss": "modal"
+                                                                },
+                                                                "type": "button",
+                                                                "saveOnEnter": false,
+                                                                "input": true,
+                                                                "event": "customSubmitEvent"
+                                                            }
+                                                        ]
+                                                    }).then(function (form) {
+                                                        form.on('submit', function (submission) {
+                                                            var event = new CustomEvent('customSubmitEvent', {detail: {submission: submission}});
+                                                            document.dispatchEvent(event);
+                                                            //console.log(submission);
+                                                        });
+                                                    });
+
+
+                                                </script>
+                                            </div>
+                                        </div>
+                                    </div>
+<!--                                    <div class="col-md-6" th:fragment="departmentTemplate">-->
+<!--                                        <div class="card text-center">-->
+<!--                                            <div class="card-body">-->
+<!--                                                <h4 class="card-title">部門樣板</h4>-->
+<!--                                                <h6 class="text-muted card-subtitle mb-2"></h6>-->
+<!--                                                <link rel="stylesheet"-->
+<!--                                                      href="https://cdn.form.io/js/formio.full.min.css">-->
+<!--                                                <script src="https://cdn.form.io/js/formio.full.min.js"></script>-->
+<!--                                                <div id="modal_formselect_2"></div>-->
+<!--                                                <script>-->
+<!--                                                    Formio.createForm(document.getElementById('modal_formselect_2'), {-->
+<!--                                                        "display": "form",-->
+<!--                                                        "settings": {-->
+<!--                                                            "pdf": {-->
+<!--                                                                "id": "1ec0f8ee-6685-5d98-a847-26f67b67d6f0",-->
+<!--                                                                "src": "https://files.form.io/pdf/5692b91fd1028f01000407e3/file/1ec0f8ee-6685-5d98-a847-26f67b67d6f0"-->
+<!--                                                            }-->
+<!--                                                        },-->
+<!--                                                        "components": [-->
+<!--                                                            {-->
+<!--                                                                "label": "Select",-->
+<!--                                                                "widget": "choicesjs",-->
+<!--                                                                "hideLabel": true,-->
+<!--                                                                "tableView": true,-->
+<!--                                                                "dataSrc": "url",-->
+<!--                                                                "data": {-->
+<!--                                                                    "url": "http://localhost:8888/api/template/getList",-->
+<!--                                                                    "headers": [-->
+<!--                                                                        {-->
+<!--                                                                            "key": "",-->
+<!--                                                                            "value": ""-->
+<!--                                                                        }-->
+<!--                                                                    ]-->
+<!--                                                                },-->
+<!--                                                                "key": "select",-->
+<!--                                                                "type": "select",-->
+<!--                                                                "input": true,-->
+<!--                                                                "disableLimit": false,-->
+<!--                                                                "noRefreshOnScroll": false-->
+<!--                                                            },-->
+<!--                                                            {-->
+<!--                                                                "label": "選擇",-->
+<!--                                                                "showValidations": true,-->
+<!--                                                                "disableOnInvalid": true,-->
+<!--                                                                "tableView": false,-->
+<!--                                                                "key": "submit",-->
+<!--                                                                "attributes": {-->
+<!--                                                                    "data-bs-dismiss": "modal"-->
+<!--                                                                },-->
+<!--                                                                "type": "button",-->
+<!--                                                                "saveOnEnter": false,-->
+<!--                                                                "input": true,-->
+<!--                                                                "event": "customSubmitEvent"-->
+<!--                                                            }-->
+<!--                                                        ]-->
+<!--                                                    }).then(function (form) {-->
+<!--                                                        form.on('submit', function (submission) {-->
+<!--                                                            var event = new CustomEvent('customSubmitEvent', {detail: {submission: submission}});-->
+<!--                                                            document.dispatchEvent(event);-->
+<!--                                                            //console.log(submission);-->
+<!--                                                        });-->
+<!--                                                    });-->
+
+
+<!--                                                </script>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" role="dialog" tabindex="-1" id="recheck_save">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">請再次確認</h4>
+                            <button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6" style="font-size: 28px;"><span>表單名稱:</span></div>
+                                    <div class="col-md-6" style="font-size: 28px;"><span id="modalFormName">Text</span>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6" style="font-size: 28px;"><span>是否送簽:</span></div>
+                                        <div class="col-md-6" style="font-size: 28px;"><span id="modalSignType">Text</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container border rounded-0">
+                                <div class="testtest"></div>
+
+                                <script>
+                                    var formData;
+
+                                    function saveDataToBackend(data) {
+                                        formData = data;
+                                        Formio.createForm(document.querySelector('.testtest'), data, {
+                                            readOnly: true
+                                        });
+                                    }
+
+                                    function submitForm() {
+                                        var formName = encodeURIComponent($('#modalFormName').text());
+                                        var signType = encodeURIComponent($('#modalSignType').text());
+
+                                        // spring security
+                                        var csrf_token = $("meta[name='_csrf']").attr("content");
+                                        var csrf_header = $("meta[name='_csrf_header']").attr("content");
+
+                                        fetch('http://localhost:8888/api/template/upload', {
+
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json;charset=UTF-8',
+
+                                                // spring security
+                                                "X-CSRF-Token": csrf_token,
+
+                                                'X-Form-Name': formName,
+                                                'X-Sign-Type': signType,
+                                            },
+                                            body: JSON.stringify(formData),
+                                        })
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                alert('表單模板新增成功');
+                                                console.log("創建表單的json",JSON.stringify(data))
+                                            })
+                                            .catch(error => {
+                                                alert('表單模板新增錯誤:  ' + error);
+                                            });
+                                        $('#recheck_save').modal('hide');
+
+                                    }
+
+
+                                </script>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button>
+                            <button class="btn btn-primary" id="formGUI_submit" type="submit" onclick="submitForm()">
+                                Save
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container" style="padding-top: 2px;padding-bottom: 2px;">
+                <div class="row">
+                    <div class="col-md-2 col-xxl-2 text-center d-xl-flex d-xxl-flex align-items-xl-center justify-content-xxl-end"
+                         style="padding-top: 2px;padding-bottom: 2px;">
+                        <button class="btn btn-danger btn-lg" type="button"
+                                style="background: var(--bs-link-hover-color);" data-bs-target="#formGUI"
+                                data-bs-toggle="modal">引用現有表單
+                        </button>
+                    </div>
+                    <div class="col-md-9 col-lg-8 col-xl-6 col-xxl-5 d-md-flex align-items-md-center justify-content-xl-end justify-content-xxl-end"
+                         style="padding-top: 2px;padding-bottom: 2px;">
+                        <span class="d-xxl-flex align-items-xxl-center"></span>
+                        <input class="form-control-lg" type="text" id="formName_GUI" placeholder="表單名稱" required=""
+                               style="width: 100%;">
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                        <select class="form-control-lg" type="text" id="signType_GUI" required="" style="width: 100%;">
+                            <option value="" disabled selected hidden>表單是否需要簽核</option>
+                            <option value="Y">是</option>
+                            <option value="N">否</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-1 col-lg-2 col-xl-1 col-xxl-1 text-center d-md-flex d-lg-flex justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center"
+                         style="padding-top: 2px;padding-bottom: 2px;">
+                        <button class="btn btn-danger btn-lg" id="recheck_save_modal" type="button">儲存</button>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid" th:fragment="builderForm">
+                <hr>
+                <link rel="stylesheet" href="https://cdn.form.io/js/formio.full.min.css">
+                <script src="https://cdn.form.io/js/formio.full.min.js"></script>
+                <div id="builderform"></div>
+
+
+                <script>
+
+                    var selectValue;
+                    var url;
+                    var GUI_env = 'http://localhost:8888/api/env?id=formGUI_env';
+                    var GUI_Json;
+
+                    function updateUrl() {
+                        url = selectValue ? `http://localhost:8888/api/template?id=${selectValue}` : '';
+                        refreshFormBuilder();
+                    }
+
+                    function handleCustomSubmit(event) {
+                        selectValue = event.detail.submission.data.select.value;
+                        console.log(selectValue);
+                        updateUrl();
+                    }
+
+                    document.addEventListener('customSubmitEvent', handleCustomSubmit);
+
+                    // 初始化
+                    updateUrl();
+
+
+                    function refreshFormBuilder() {
+                        Formio.builder(document.getElementById('builderform'), url, GUI_env).then(function (builder) {
+                            // 这里的 builder 就是获取到的 Formio builder 对象
+                            builder.on('saveComponent', function () {
+
+                                GUI_Json = builder.schema;
+                            });
+                        });
+                    }
+
+
+                </script>
+
+                <hr>
+            </div>
+        </div>
+        <footer class="bg-white sticky-footer">
+            <div class="container my-auto">
+                <div class="text-center my-auto copyright"><span>Copyright © SCSB 2023 v1.0</span></div>
+            </div>
+        </footer>
+    </div>
+    <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+</div>
+<script th:src="@{/static/assets/js/jquery.min.js}"></script>
+<script th:src="@{/static/assets/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/static/assets/js/addFormV2.js}"></script>
+<script th:src="@{/static/assets/js/Dyn_formGUI.js}"></script>
+<script th:src="@{https://cdn.datatables.net/v/bs5/dt-1.13.6/af-2.6.0/b-2.4.2/b-colvis-2.4.2/b-print-2.4.2/cr-1.7.0/date-1.5.1/fc-4.3.0/fh-3.4.0/kt-2.10.0/r-2.5.0/rg-1.4.1/rr-1.4.1/sc-2.2.0/sb-1.6.0/sp-2.2.0/datatables.min.js}"></script>
+<script href="https://cdn.form.io/js/formio.full.min.js"></script>
+<script href="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/js/jquery.smartWizard.min.js" type="module"></script>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/jquery.tablesorter.js}"></script>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/widgets/widget-filter.min.js}"></script>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/widgets/widget-storage.min.js}"></script>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js}"></script>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js}"></script>
+<script th:src="@{/static/assets/js/incident.js}"></script>
+<script th:src="@{/static/assets/js/theme.js}"></script>
+<script th:src="@{/static/assets/js/unreview.js}"></script>
+
+</body>
+
+</html>

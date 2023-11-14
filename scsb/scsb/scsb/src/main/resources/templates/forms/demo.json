@@ -1,0 +1,20 @@
+{
+  "components": [
+    {
+      "label": "Text Field",
+      "applyMaskOn": "change",
+      "tableView": true,
+      "type": "textfield",
+      "input": true,
+      "key": "textField"
+    },
+    {
+      "type": "button",
+      "label": "Submit",
+      "key": "submit",
+      "disableOnInvalid": true,
+      "input": true,
+      "tableView": false
+    }
+  ]
+}
