@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="dataSourceStorageLocal" created-in="IU-232.9921.47">
-    <data-source name="scsb_e-sign@db.anything.best" uuid="23af055d-7598-457b-ba5c-e4b53fe1bd49">
+  <component name="dataSourceStorageLocal" created-in="IU-232.10227.8">
+    <data-source name="scsb_e-sign@db.anything.best" uuid="b820e6a6-4a5e-49f8-86e1-dde55825f42f">
       <database-info product="MariaDB" version="10.3.38-MariaDB-0ubuntu0.20.04.1" jdbc-version="4.2" driver-name="MariaDB Connector/J" driver-version="3.0.7" dbms="MARIADB" exact-version="10.3.38" exact-driver-version="3.0">
         <extra-name-characters>#@</extra-name-characters>
         <identifier-quote-string>`</identifier-quote-string>
       </database-info>
       <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact" />
-      <secret-storage>master_key</secret-storage>
       <user-name>scsb_user001</user-name>
       <schema-mapping>
         <introspection-scope>

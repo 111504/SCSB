@@ -1,0 +1,12 @@
+@media (min-width: 768px) {
+  .sidebar.toggled {
+    overflow: visible;
+    width: 0 !important;
+  }
+}
+
+.sidebar.toggled {
+  width: 0 !important;
+  overflow: hidden;
+}
+
